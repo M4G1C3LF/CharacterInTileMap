@@ -115,15 +115,15 @@ public class PlayerController : MonoBehaviour {
 		darknessAnimator = darkness.GetComponent<Animator> ();
 
 
-
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		getAxis ();
 		checkAnimation ();
 		checkMovement ();
 		checkLighter();
+
 
 	}
 }

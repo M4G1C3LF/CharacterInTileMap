@@ -43,6 +43,7 @@ public class GridEditor : Editor
 
 		GUILayout.EndHorizontal();
 
+		GUILayout.EndHorizontal();
 	}
 
 	public void paintGrid()
