@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour {
 
 	int moveSideState;
 
+	int lighterWarmLevel = 0;
+	int lighterMaxWarmLevel = 1000;
+	bool lighterIsOverheated = false;
 
 	public float translationSpeed = 0.01f;	//USE THIS VAR TO CONFIG THE SPEED OF THE PLAYER
 
@@ -92,16 +95,60 @@ public class PlayerController : MonoBehaviour {
 		this.transform.position = new Vector3 (this.transform.position.x + x, this.transform.position.y + y, this.transform.position.z);
 	}
 
+	public void checkLighterOverheat()
+	{
+		if (this.lighterIsOverheated)
+		{
+			if (this.lighterWarmLevel == 0)
+			{
+				this.lighterIsOverheated = false;
+			}
+		}
+
+		if (this.lighterWarmLevel >= this.lighterMaxWarmLevel)
+		{
+			this.lighterIsOverheated = true;
+		}
+	}
+
+	public void freezeLighter(int unit)
+	{
+		if (lighterWarmLevel > 0)
+		{
+			this.lighterWarmLevel -= unit;
+		}
+
+		if (this.lighterWarmLevel < 0)
+		{
+			this.lighterWarmLevel = 0;
+		}
+
+	}
+
+	public void warmLighter(int unit)
+	{
+		if (!lighterIsOverheated)
+		{
+			this.lighterWarmLevel += unit;
+		}
+
+	}
 	public void checkLighter()
 	{
-		if (Input.GetButton("Fire1"))
+		this.checkLighterOverheat ();
+
+		if (Input.GetButton("Fire1") && !lighterIsOverheated)
 		{
 			darknessAnimator.SetBool ("lightEnabled",true);
+			warmLighter(1);
 		}
 		else
 		{
 			darknessAnimator.SetBool ("lightEnabled",false);
+			freezeLighter(1);
 		}
+
+		Debug.Log (this.lighterWarmLevel);
 	}
 	// Use this for initialization
 	void Start () {
