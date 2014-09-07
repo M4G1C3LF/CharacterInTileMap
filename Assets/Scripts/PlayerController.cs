@@ -148,7 +148,6 @@ public class PlayerController : MonoBehaviour {
 			freezeLighter(1);
 		}
 
-		Debug.Log (this.lighterWarmLevel);
 	}
 	// Use this for initialization
 	void Start () {
