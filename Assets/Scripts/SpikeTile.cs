@@ -7,46 +7,45 @@ public class SpikeTile : Tile {
 	public int spikeFrequency = 50;
 	public int actualFrequency = 0;
 
-	private void CheckSpikeFrequency()
+
+	private void ShowSpikes()
+	{
+		spikesOut = true;
+		GetComponent<Animator>().SetBool ("spikesOut",spikesOut);
+
+	}
+
+	private void HideSpikes()
+	{
+		spikesOut = false;
+		GetComponent<Animator>().SetBool ("spikesOut",spikesOut);
+	}
+
+	private void CheckSpikes()
 	{
 		if (spikeFrequency-actualFrequency == 0)
 		{
 			if (spikesOut)
 			{
-				spikesOut = false;
+				HideSpikes();
 			}
 			else
 			{
-				spikesOut = true;
+				ShowSpikes ();
 			}
 			actualFrequency=0;
 		}
 		actualFrequency++;
 	}
 
-	private void ShowSpikes()
-	{
-		spikesOut = true;
-	}
 
-	private void HideSpikes()
+	void OnTriggerStay2D(Collider2D collider)
 	{
-		spikesOut = false;
-	}
-	
-	private void CheckSpikes()
-	{
-
-		if (spikesOut && (actualFrequency == spikeFrequency) )
+		if (collider.tag == "Player" && spikesOut)
 		{
-			//AQUI HAY QUE LLAMAR AL ANIMATOR PARA QUE SE VEA
-			Debug.Log("Mostrando Pinchos");
+			collider.GetComponentInChildren<Animator>().SetBool ("dead",true);
 		}
-		else if ( !spikesOut && (actualFrequency == spikeFrequency) )
-		{
-			//AQUI HAY QUE LLAMAR AL ANIMATOR QUE SE VEA
-			Debug.Log("Escondiendo Pinchos");
-		}
+		
 	}
 
 	// Use this for initialization
@@ -58,9 +57,7 @@ public class SpikeTile : Tile {
 	protected override void Update () {
 		base.Update ();
 
-		CheckSpikeFrequency ();
 		CheckSpikes ();
-
 
 	}
 }

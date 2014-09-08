@@ -166,9 +166,21 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		getAxis ();
-		checkAnimation ();
-		checkMovement ();
-		checkLighter();
+
+		if (!linkAnimator.GetBool ("dead"))
+		{
+			checkAnimation ();
+			checkMovement ();
+			checkLighter();
+		}
+		else
+		{
+			//apagamos la luz.
+			darknessAnimator.SetBool ("lightEnabled",false);
+		}
+
+
+
 
 
 	}
