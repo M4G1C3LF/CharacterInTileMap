@@ -43,7 +43,7 @@ public class Tile : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 
 		illuminated = false;
@@ -54,7 +54,7 @@ public class Tile : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected virtual void Update () {
 	
 		CheckIllumination ();
 	}
